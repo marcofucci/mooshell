@@ -24,7 +24,7 @@
 
 <script type='text/javascript'>
 	var default_text = 'JavaScript/CSS URL',
-		add_external_resource_url = "{% url add_external_resource %}"
+		add_external_resource_url = "{% url add_external_resource %}";
 	var update_resource_input = function(value) {
 		if (value) {
 			if (resources.contains(value)) {
@@ -34,18 +34,25 @@
 		}
 		$('external_resources_id').set('value', resources.join(','));
 		return true;
-	}
+	};
 	var remove_resource = function(value) {
 		if (resources.contains(value)) {
-			resources.erase(value)
+			resources.erase(value);
 		}
 		update_resource_input();
-		$('external_resource_'+value).destroy();
-	}
+		
+		this.external_resource_el = $('external_resource_'+value);
+		new Fx.Reveal(this.external_resource_el, {
+			onComplete: function(){
+				this.destroy();
+			}.bind(this.external_resource_el)
+		}).dissolve();
+		
+	};
 	var submit_external_resource = function(e) {
 		e.stop();
 		// save url, after success update current list of resources and clean up the input
-		var url = $('external_resource').value
+		var url = $('external_resource').value;
 		if (url && url != $('external_resource').retrieve('default_value') && $('external_resource').value.length > 7) {
 			new Request.JSON({
 				url: add_external_resource_url,
@@ -72,14 +79,14 @@
 									remove_resource(this.get('rel').toInt());
 								}
 							}
-						}).inject(li)
+						}).inject(li);
 					} else {
 						// this resource was already included in the list
 					}
 					var inp = $('external_resource');
 					inp.value = '';
 					if (e.target('tag') != 'input') { 
-						console.log(this, this.get('tag'))
+						// console.log(this, this.get('tag'));
 						set_default_input_value.bind($('external_resource'))();
 					}
 				}
