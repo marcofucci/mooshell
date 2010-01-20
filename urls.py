@@ -15,6 +15,8 @@ urlpatterns = patterns('mooshell.views',
 	url(r'^ajax_json_echo/nodelay/$','ajax_json_echo', {'delay': False}, name='ajax_json_echo_nodelay'),
 	url(r'^ajax_html_echo/$','ajax_html_echo', name='ajax_html_echo'),
 	url(r'^ajax_html_echo/nodelay/$','ajax_html_echo', {'delay': False}, name='ajax_html_echo_nodelay'),
+	url(r'^ajax_xml_echo/$','ajax_xml_echo', name='ajax_xml_echo'),
+	url(r'^ajax_xml_echo/nodelay/$','ajax_xml_echo', {'delay': False}, name='ajax_xml_echo_nodelay'),
 	url(r'^_get_dependencies/(?P<lib_id>.*)/$','get_dependencies', name='_get_dependencies'),
 	url(r'^_get_library_versions/(?P<group_id>.*)/$','get_library_versions', name='_get_library_versions'),
 	

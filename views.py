@@ -326,6 +326,13 @@ def ajax_html_echo(req, delay=True):
 	return HttpResponse(t)
 
 
+def ajax_xml_echo(req, delay=True):
+	if delay:
+		time.sleep(random.uniform(1,3))
+	t = req.POST.get('xml','')
+	return HttpResponse(t, mimetype='application/xml')
+
+
 def ajax_json_response(req):
 	response_string = req.POST.get('response_string','This is a sample string')	
 	return HttpResponse(simplejson.dumps(
