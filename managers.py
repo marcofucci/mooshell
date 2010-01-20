@@ -34,8 +34,22 @@ class ShellManager(models.Manager):
 			return self.get_owned(user, **kwargs)
 
 	def get_public(self, **kwargs):
-			return self.get_query_set().get(private=False, **kwargs)
+		return self.get_query_set().get(private=False, **kwargs)
 
 	def get_owned(self, user, **kwargs):
-			return self.get_query_set().get(private=True, author__id=user.id, **kwargs)
+		return self.get_query_set().get(private=True, author__id=user.id, **kwargs)
 
+	def all_examples(self):
+		return self.get_query_set().filter(proposed_example=True)
+
+	def all_examples_by_groups(self):
+		examples = self.all_examples()
+		libs = {}
+		for ex in examples:
+			group_name = ex.js_lib.library_group.name
+			if not libs.has_key(group_name):
+				libs[group_name] = []
+			libs[group_name].append(ex)
+		return libs
+
+	

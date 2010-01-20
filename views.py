@@ -70,6 +70,8 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 	
 	if not skin: skin = req.GET.get('skin',settings.MOOSHELL_DEFAULT_SKIN)
 
+	examples = Shell.objects.all_examples_by_groups()
+
 	
 	# TODO: join some js files for less requests
 	js_libs = [
@@ -88,6 +90,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 		'shell': shell,
 		'css_files': [reverse('mooshell_css', args=["%s.css" % skin])],
 		'js_libs': js_libs,
+		'examples': examples,
 		'title': title,
 		'example_url': example_url,
 		'web_server': server,

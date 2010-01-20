@@ -45,3 +45,15 @@ class ShellTest(MooshellBaseTestCase):
 		self.shell.save()
 		self.failUnless(Shell.objects.get_owned(self.user, pastie__slug=TEST_SLUG, version=0))
 		
+	def test_example(self):
+		self.shell.proposed_example = True
+		self.shell.title = 'Example'
+		self.shell.save()
+		examples = Shell.objects.all_examples()
+		self.failUnless(examples)
+		self.assertEqual(examples[0].title, self.shell.title)
+
+		examples = Shell.objects.all_examples_by_groups()
+		self.failUnless(examples)
+		self.failUnless(examples.has_key(TEST_LIB_GROUP_NAME))
+		self.assertEqual(examples[TEST_LIB_GROUP_NAME][0].title, self.shell.title)

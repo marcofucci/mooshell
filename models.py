@@ -339,16 +339,3 @@ def make_first_version_favourite(instance, **kwargs):
 post_save.connect(make_first_version_favourite, sender=Shell)
 			
 	
-
-	
-class Example(models.Model):
-	"""
-	List of examples 
-	"""
-	name = models.CharField(max_length=255)
-	shell = models.ForeignKey(Shell, related_name='example', unique=True)
-	
-	class Meta:
-		ordering = ["name"]
-	
-	
