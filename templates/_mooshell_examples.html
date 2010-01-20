@@ -1,13 +1,17 @@
+{% if examples %}
 <h3 class='toggler' id='examples_toggler'>Examples</h3>
 <div class='element'>
 	<div class="elementBody">
 		<div class="ebCont">		
+			{% for group, group_examples in examples.items %}
 			<p>
-				<a href='{% url pastie "wzRDj" %}'>delay</a>, 
-				<a href='{% url pastie "json" %}'>Request.JSON</a>, 
-				<a href='{% url pastie "html" %}'>Request.HTML</a>,
-				<a href='{% url pastie "dEyUs" %}'>setting GB dates</a>
+				{% for ex in group_examples %}
+					<a href='{{ ex.get_absolute_url }}'>
+						{{ ex.title }}
+					</a>{% if not forloop.last %},{% endif %}
+				{% endfor %}
 			</p>
-		</div>
+		{% endfor %}</div>
 	</div>
 </div>
+{% endif %}
