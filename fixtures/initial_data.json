@@ -1,0 +1,43 @@
+[
+	{
+		"model": "mooshell.JSLibraryGroup",
+		"pk": 1,
+		"fields": {
+			"name": "MooTools",
+			"description": "",
+			"selected": 1
+		}
+	},
+	{
+		"model": "mooshell.JSLibraryWrap",
+		"pk": 1,
+		"fields": {
+			"name": "MooTools onDomReady",
+			"code_start": "window.addEvent('ready', function() {",
+			"code_end": "});"
+		}
+	},
+	{
+		"model": "mooshell.JSLibraryWrap",
+		"pk": 2,
+		"fields": {
+			"name": "MooTools onLoad",
+			"code_start": "window.addEvent('load', function() {",
+			"code_end": "});"
+		}
+	},
+	{
+		"model": "mooshell.JSLibrary",
+		"pk": 1,
+		"fields": {
+			"library_group": 1,
+			"version": "1.2.4",
+			"href": "/js/lib/mootools-1.2.4-core.js",
+			"wrap_d": 1,
+			"wrap_l": 2,
+			"active": 1,
+			"selected": 1
+		}
+
+	}
+]
