@@ -49,3 +49,20 @@ class PastieTest(MooshellBaseTestCase):
 		self.pastie.favourite = shell
 		self.pastie.save()
 		self.assertEqual(self.pastie.favourite.id, shell.id)
+
+	def test_example(self):
+		shell2 = self.get_shell(self.pastie, self.lib, title='Example')
+		shell2.save()
+		self.pastie.favourite = shell2
+		self.pastie.example = True
+		self.pastie.save()
+		self.shell.title = 'Not Example'
+		self.shell.save()
+		examples = Pastie.objects.all_examples()
+		self.failUnless(examples)
+		self.assertEqual(examples[0].favourite.title, shell2.title)
+
+		examples = Pastie.objects.all_examples_by_groups()
+		self.failUnless(examples)
+		self.failUnless(examples.has_key(TEST_LIB_GROUP_NAME))
+		self.assertEqual(examples[TEST_LIB_GROUP_NAME][0].favourite.title, shell2.title)

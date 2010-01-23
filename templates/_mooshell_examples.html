@@ -6,8 +6,8 @@
 			{% for group, group_examples in examples.items %}
 			<p>
 				{% for ex in group_examples %}
-					<a href='{{ ex.get_absolute_url }}'>
-						{{ ex.title }}
+					<a href='{{ ex.favourite.get_absolute_url }}'>
+						{{ ex.favourite.title }}
 					</a>{% if not forloop.last %},{% endif %}
 				{% endfor %}
 			</p>
