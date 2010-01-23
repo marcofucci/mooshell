@@ -70,7 +70,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 	
 	if not skin: skin = req.GET.get('skin',settings.MOOSHELL_DEFAULT_SKIN)
 
-	examples = Shell.objects.all_examples_by_groups()
+	examples = Pastie.objects.all_examples_by_groups()
 
 	
 	# TODO: join some js files for less requests
