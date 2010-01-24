@@ -9,6 +9,20 @@ class JSLibraryManager(models.Manager):
 	def get_active(self, **kwargs):
 		return self.get_query_set().filter(active=True,**kwargs)
 
+class PastieManager(models.Manager):
+	def all_examples(self):
+		return self.get_query_set().filter(example=True)
+
+	def all_examples_by_groups(self):
+		examples = self.all_examples()
+		libs = {}
+		for ex in examples:
+			group_name = ex.favourite.js_lib.library_group.name
+			if not libs.has_key(group_name):
+				libs[group_name] = []
+			libs[group_name].append(ex)
+		return libs
+
 class ShellManager(models.Manager):
 	def all(self):
 		public = self.get_query_set().filter(private=False)
@@ -34,8 +48,8 @@ class ShellManager(models.Manager):
 			return self.get_owned(user, **kwargs)
 
 	def get_public(self, **kwargs):
-			return self.get_query_set().get(private=False, **kwargs)
+		return self.get_query_set().get(private=False, **kwargs)
 
 	def get_owned(self, user, **kwargs):
-			return self.get_query_set().get(private=True, author__id=user.id, **kwargs)
+		return self.get_query_set().get(private=True, author__id=user.id, **kwargs)
 

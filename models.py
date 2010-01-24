@@ -6,7 +6,7 @@ from django.db.models.signals import pre_save, post_save
 from django.contrib.auth.models import User
 from django.conf import settings   
 
-from managers import JSDependencyManager, JSLibraryManager, ShellManager
+from managers import JSDependencyManager, JSLibraryManager, PastieManager, ShellManager
 
 def next_week():
 	return datetime.now() + timedelta(days=7)
@@ -148,7 +148,10 @@ class Pastie(models.Model):
 	slug = models.CharField(max_length=255, unique=True, blank=True)
 	created_at = models.DateTimeField(default=datetime.now)
 	author = models.ForeignKey(User, null=True, blank=True)
+	example = models.BooleanField(default=False, blank=True)
 	favourite = models.ForeignKey('Shell', null=True, blank=True, related_name='favs')
+
+	objects = PastieManager()
 
 	def set_slug(self):
 		from random import choice
@@ -338,17 +341,4 @@ def make_first_version_favourite(instance, **kwargs):
 		instance.pastie.save()
 post_save.connect(make_first_version_favourite, sender=Shell)
 			
-	
-
-	
-class Example(models.Model):
-	"""
-	List of examples 
-	"""
-	name = models.CharField(max_length=255)
-	shell = models.ForeignKey(Shell, related_name='example', unique=True)
-	
-	class Meta:
-		ordering = ["name"]
-	
 	

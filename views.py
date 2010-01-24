@@ -70,6 +70,8 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 	
 	if not skin: skin = req.GET.get('skin',settings.MOOSHELL_DEFAULT_SKIN)
 
+	examples = Pastie.objects.all_examples_by_groups()
+
 	
 	# TODO: join some js files for less requests
 	js_libs = [
@@ -88,6 +90,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 		'shell': shell,
 		'css_files': [reverse('mooshell_css', args=["%s.css" % skin])],
 		'js_libs': js_libs,
+		'examples': examples,
 		'title': title,
 		'example_url': example_url,
 		'web_server': server,
@@ -321,6 +324,13 @@ def ajax_html_echo(req, delay=True):
 		time.sleep(random.uniform(1,3))
 	t = req.POST.get('html','')
 	return HttpResponse(t)
+
+
+def ajax_xml_echo(req, delay=True):
+	if delay:
+		time.sleep(random.uniform(1,3))
+	t = req.POST.get('xml','')
+	return HttpResponse(t, mimetype='application/xml')
 
 
 def ajax_json_response(req):

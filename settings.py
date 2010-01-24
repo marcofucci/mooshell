@@ -18,12 +18,12 @@ MOOSHELL_MEDIA_PATHS = ['mooshell']
 MOOSHELL_LIBRARY_GROUP = "Mootools" 
 
 # SEO SETTINGS
-MOOSHELL_SEO_TITLE_TAIL = " | Edit your code"
+MOOSHELL_SEO_TITLE_TAIL = " - Edit your code"
 MOOSHELL_SEO_TITLE_HEAD = ""
 MOOSHELL_SEO_DESCRIPTION = "mootools shell, easy test you snippets before implementing"
 MOOSHELL_SEO_KEYWORDS = "mootools,javascript,javascript framework,shell,test"
 
-MOOSHELL_TITLE_SEPARATOR = " | "
+MOOSHELL_TITLE_SEPARATOR = " - "
 
 MOOSHELL_PROJECT_NAME = "MooShell"
 MOOSHELL_PROJECT_STATUS = "(local)"

@@ -15,9 +15,9 @@ class JSLibraryGroupTest(MooshellBaseTestCase):
 	def test_get_selected(self):
 		selected_name = "%s_selected" % TEST_LIB_GROUP_NAME
 		JSLibraryGroup.objects.create(name=selected_name, selected=True)
-		selected = JSLibraryGroup.objects.filter(selected=True)[0]
+		selected = JSLibraryGroup.objects.filter(selected=True)
 		self.failUnless(selected)
-		self.assertEqual(selected.name, selected_name)
+		self.assertTrue(selected_name in [s.name for s in selected])
 
 
 	def test_unicode(self):
