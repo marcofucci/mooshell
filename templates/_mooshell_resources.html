@@ -5,15 +5,17 @@
 <div class='element' id='resources_element'>
 	<div class="elementBody">
 		<div class="ebCont">
-			<input type='text' id='external_resource' value='' />
-			<button id='add_external_resource'>+</button>
+			<div id="external-resources-form">
+				<input id="external_resource" type="text" value="" />
+				<a id="add_external_resource" class="submit" href="#" title="Add resource"><span>Add</span></a>
+			</div>
 		
 			<input type='hidden' value='' id='external_resources_id' name='add_external_resources' />
 			<ul id='external_resources_list'>
 			<script type='text/javascript'>var resources = [];</script>
 			{% for res in shell.external_resources.all %}
 				<li id='external_resource_{{ res.id }}'>
-					<span class='filename' title="{{ res.url }}">{{ res.filename }}</span><a onclick='remove_resource({{ res.id }})'>x</a>
+					<a class='filename' href="{{ res.url }}" title="{{ res.url }}">{{ res.filename }}</a><a onclick='remove_resource({{ res.id }})' class='remove'>Remove</a>
 				</li>
 				<script type='text/javascript'>resources.push({{ res.id }})</script>
 			{% endfor %}
@@ -65,14 +67,17 @@
 						var li = new Element('li', {
 							'id': 'external_resource_' + response.id
 						}).inject($('external_resources_list'));
-						new Element('span', {
+						new Element('a', {
 							'text': response.filename,
 							'title': response.url,
-							'class': 'filename'
+							'class': 'filename',
+							'href': response.url,
+							'target': '_blank'
 						}).inject(li);
 						new Element('a', {
 							'text': 'Remove',
 							'rel': response.id,
+							'class': 'remove',
 							'events': {
 								'click': function(e) {
 									e.stop();
@@ -86,7 +91,6 @@
 					var inp = $('external_resource');
 					inp.value = '';
 					if (e.target('tag') != 'input') { 
-						// console.log(this, this.get('tag'));
 						set_default_input_value.bind($('external_resource'))();
 					}
 				}
@@ -117,7 +121,6 @@
 		if (!inp.value) {
 			inp.set('value', default_text);
 		}
-		console.log(resources);
 		update_resource_input();
 		inp.addEvents({
 			'change': set_default_input_value,
