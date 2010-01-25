@@ -20,15 +20,10 @@
 					{{ shellform.body_tag }}
 				</label>
 			</p>
-			{% comment %}
-			<p>
-				MooShell is an official <a title="Go to MooTools.net" href="http://mootools.net" target="_new">MooTools</a> 
-				project. Please edit code in the boxes on the right, hit <strong>Run</strong> to see Result. <strong>Save New</strong> 
-				to save a new <strong>Shell</strong>, Update to create a new version of existing one.
-				If you'd like to choose MooTools version, use <a onclick='Layout.sidebar.accordion.display(Layout.sidebar.accordion.togglers.indexOf($("settings_toggler")))' href="#">Settings</a>
-				panel above.
-			</p>
-			{% endcomment %}
+			<p>{% for doctype in doctypes %}
+				<input {% if doctype.selected %}checked="checked" {% endif %}type="radio" id="dtd_{{ doctype.name }}" name="doctype" value="{{ doctype.id }}"/>
+				<label for="dtd_{{ doctype.name }}">{{ doctype.name }}</a>
+			{% endfor %}</p>
 		</div>	
 	</div>	
 </div>

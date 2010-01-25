@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
-from models import Pastie, Shell, JSLibraryGroup, JSLibrary, JSLibraryWrap, JSDependency, ExternalResource
+from models import Pastie, Shell, JSLibraryGroup, JSLibrary, JSLibraryWrap, JSDependency, ExternalResource, DocType
 from forms import PastieForm, ShellForm
 from base.views import serve_static as base_serve_static
 from base.utils import log_to_file, separate_log
@@ -71,6 +71,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 	if not skin: skin = req.GET.get('skin',settings.MOOSHELL_DEFAULT_SKIN)
 
 	examples = Pastie.objects.all_examples_by_groups()
+	doctypes = DocType.objects.all()
 
 	
 	# TODO: join some js files for less requests
@@ -91,6 +92,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 		'css_files': [reverse('mooshell_css', args=["%s.css" % skin])],
 		'js_libs': js_libs,
 		'examples': examples,
+		'doctypes': doctypes,
 		'title': title,
 		'example_url': example_url,
 		'web_server': server,
@@ -124,6 +126,7 @@ def pastie_save(req, nosave=False, skin=None):
 				pastie.save()
 
 		shellform = ShellForm(req.POST)
+		print req.POST.get('doctype_id')
 			
 		if shellform.is_valid():
 			

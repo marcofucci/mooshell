@@ -38,6 +38,15 @@
 			"active": 1,
 			"selected": 1
 		}
-
+	},
+	{
+		"model": "mooshell.DocType",
+		"pk": 1,
+		"fields": {
+			"name": "strict",
+			"code": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3c.org/TR/html4/strict.dtd\">",
+			"type": "html",
+			"selected": 1
+		}
 	}
 ]
