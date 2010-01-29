@@ -145,7 +145,7 @@ class DocType(models.Model):
 	DocString to choose from
 	"""
 	name = models.CharField(max_length=255, unique=True)
-	code = models.CharField(max_length=255, blank=True, null=True)
+	code = models.TextField(blank=True, null=True)
 	type = models.CharField(max_length=100, default='html', blank=True)
 	selected = models.BooleanField(default=False, blank=True)
 	
