@@ -35,6 +35,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 
 	title = settings.MOOSHELL_NEW_TITLE
 		
+	doctypes = DocType.objects.all()
 	if slug:
 		if skin:
 			" important as {user}/{slug} is indistingushable from {slug}/{skin} "
@@ -60,6 +61,9 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 				'embedded_url': embedded_url
 				})
 		title = shell.title if shell.title else settings.MOOSHELL_VIEW_TITLE
+		for dtd in doctypes:
+			if dtd.id == shell.doctype.id:
+				dtd.current = True
 	else:
 		example_url = ''
 		#pastieform = PastieForm()
@@ -71,7 +75,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 	if not skin: skin = req.GET.get('skin',settings.MOOSHELL_DEFAULT_SKIN)
 
 	examples = Pastie.objects.all_examples_by_groups()
-	doctypes = DocType.objects.all()
+
 
 	
 	# TODO: join some js files for less requests

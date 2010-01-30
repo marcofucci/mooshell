@@ -20,10 +20,11 @@
 					{{ shellform.body_tag }}
 				</label>
 			</p>
-			<p>{% for doctype in doctypes %}
-				<input {% if doctype.selected %}checked="checked" {% endif %}type="radio" id="dtd_{{ doctype.name }}" name="doctype" value="{{ doctype.id }}"/>
-				<label for="dtd_{{ doctype.name }}">{{ doctype.name }}</a>
-			{% endfor %}</p>
+			<p>
+				<label>DTD
+				<select name='doctype'>{% for doctype in doctypes %}
+					<option {% if shell %}{% if doctype.current %}selected {% endif %}{% else %}{% if doctype.selected %}selected {% endif %}{% endif %}id="dtd_{{ doctype.name }}" value="{{ doctype.id }}"/>{{ doctype.name }}</option>
+			{% endfor %}</select></label></p>
 		</div>	
 	</div>	
 </div>
