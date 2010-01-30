@@ -130,7 +130,6 @@ def pastie_save(req, nosave=False, skin=None):
 				pastie.save()
 
 		shellform = ShellForm(req.POST)
-		print req.POST.get('doctype_id')
 			
 		if shellform.is_valid():
 			
