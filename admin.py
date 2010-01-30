@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from models import JSLibraryGroup, JSLibraryWrap, JSLibrary, JSDependency, Pastie, Shell, ExternalResource
+from models import JSLibraryGroup, JSLibraryWrap, JSLibrary, JSDependency, Pastie, Shell, ExternalResource, DocType
 
 class JSLibraryGroupAdmin(admin.ModelAdmin):	
 	pass
@@ -35,4 +35,8 @@ admin.site.register(Shell, ShellAdmin)
 class ExternalResourceAdmin(admin.ModelAdmin):	
 	pass
 admin.site.register(ExternalResource, ExternalResourceAdmin)
+
+class DocTypeAdmin(admin.ModelAdmin):	
+	pass
+admin.site.register(DocType, DocTypeAdmin)
 

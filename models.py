@@ -152,6 +152,10 @@ class DocType(models.Model):
 	def __unicode__(self):
 		return self.code
 
+	class Admin:
+		pass
+	
+
 
 class Pastie(models.Model):
 	"""
