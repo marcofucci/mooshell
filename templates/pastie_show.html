@@ -16,9 +16,13 @@
 	<style type='text/css'>
 		{{ shell.code_css|safe }}
 	</style>
-	<script type='text/javascript'>{{ wrap.code_start|safe }}
+	<script type='text/javascript'>
+	//<![CDATA[ 
+	{{ wrap.code_start|safe }}
 		{{ shell.code_js|safe }}
-	{{ wrap.code_end|safe }}</script>
+	{{ wrap.code_end|safe }}
+	//]]> 
+	</script>
 </head>
 {{ shell.body_tag|default:"<body>"|safe }}
 	{{ shell.code_html|safe }}
