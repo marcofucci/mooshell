@@ -70,6 +70,11 @@ var Layout = {
 		this.editors[editor.options.name] = editor;
 		this.resize();
 	},
+	decodeEditors: function() {
+		this.editors.each( function(ed) {
+			ed.b64decode();
+		});
+	},
 	updateFromMirror: function() {
 		this.editors.each( function(ed) {
 			ed.updateFromMirror();

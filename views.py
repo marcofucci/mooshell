@@ -1,6 +1,7 @@
 import os.path
 import random
 import time
+import base64
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views import static
@@ -135,6 +136,11 @@ def pastie_save(req, nosave=False, skin=None):
 			
 			" Instantiate shell data from the form "
 			shell = shellform.save(commit=False)
+			
+			" Base64 decode "
+			shell.code_js = base64.b64decode(shell.code_js)
+			shell.code_html = base64.b64decode(shell.code_html)
+			shell.code_css = base64.b64decode(shell.code_css)
 
 			" Connect shell with pastie "
 			shell.pastie = pastie
