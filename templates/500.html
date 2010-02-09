@@ -52,6 +52,9 @@
 			new MooShellEditor.HTML($('id_code_html')); // add user defined parameters
 			new MooShellEditor.CSS($('id_code_css')); // add user defined parameters
 			Layout.render();
+			Layout.editors.each( function(ed) {
+				ed.element.set('value', Base64.encode(ed.element.value));
+			});
 			$('show-result').submit();
 		});
 	</script>
@@ -88,6 +91,7 @@
 			</div>
 		</div>
 		<input type='hidden' name='js_lib' value='2'/>
+		<input type='hidden' name='js_dependency' value='2'/>
 		<input type='hidden' name='js_wrap' value='d'/>
 		<div id="content">		
 			<input type="hidden" name="slug" id="id_slug" />
