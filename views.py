@@ -173,10 +173,6 @@ def pastie_save(req, nosave=False, skin=None):
 			if req.user.is_authenticated():
 				shell.author = req.user
 
-			# version is set automatically
-			#if slug:
-			#	shell.set_next_version()
-				
 			shell.save()
 
 			# add saved dependencies			
@@ -189,7 +185,6 @@ def pastie_save(req, nosave=False, skin=None):
 
 			" return json with pastie url "
 			return HttpResponse(simplejson.dumps({
-					#'pastie_url': ''.join(['http://',req.META['SERVER_NAME'], shell.get_absolute_url()]),
 					'pastie_url_relative': shell.get_absolute_url()
 					}),mimetype='application/javascript'
 				)

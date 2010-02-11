@@ -23,7 +23,7 @@
 			<p>
 				<label>DTD
 				<select name='doctype'>{% for doctype in doctypes %}
-					<option {% if shell %}{% if doctype.current %}selected {% endif %}{% else %}{% if doctype.selected %}selected {% endif %}{% endif %}id="dtd_{{ doctype.name }}" value="{{ doctype.id }}"/>{{ doctype.name }}</option>
+					<option {% if shell %}{% if doctype.current %}selected {% endif %}{% else %}{% if doctype.selected %}selected {% endif %}{% endif %}id="dtd_{{ doctype.name }}" value="{{ doctype.id }}">{{ doctype.name }}</option>
 			{% endfor %}</select></label></p>
 		</div>	
 	</div>	
