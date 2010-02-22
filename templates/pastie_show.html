@@ -1,4 +1,5 @@
-{% include "_doctype_and_top_head.html" %}
+{% if shell.doctype %}{{ shell.doctype|safe }}{% else %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"xxx>{% endif %}
+{% include "_top_head.html" %}
 	<script type='text/javascript' src='{{ shell.js_lib.href }}'{% if shell.js_lib_option %} {{ shell.js_lib_option|safe }}{% endif %}></script>
 	{% for js in dependencies %}<script type="text/javascript" src="{{ js.url }}"></script>
 	{% endfor %}
@@ -19,8 +20,12 @@
 		}
 		{{ shell.code_css|safe }}
 	</style>
-	<script type='text/javascript'>{{ wrap.code_start|safe }}
+	<script type='text/javascript'>
+	//<![CDATA[ 
+	{{ wrap.code_start|safe }}
 		{{ shell.code_js|safe }}
-	{{ wrap.code_end|safe }}</script>
+	{{ wrap.code_end|safe }}
+	//]]> 
+	</script>
 </head>
 {{ shell.body_tag|default:"<body>"|safe }}

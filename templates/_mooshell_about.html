@@ -1,4 +1,4 @@
-<h3 id='about_toggler' class='toggler'>Edit title/description</h3>
+<h3 id='about_toggler' class='toggler'>Change Settings</h3>
 <div class='element'>
 	<div class="elementBody">
 		<div class="ebCont">		
@@ -20,20 +20,16 @@
 					{{ shellform.body_tag }}
 				</label>
 			</p>
-			{% comment %}
 			<p>
-				MooShell is an official <a title="Go to MooTools.net" href="http://mootools.net" target="_new">MooTools</a> 
-				project. Please edit code in the boxes on the right, hit <strong>Run</strong> to see Result. <strong>Save New</strong> 
-				to save a new <strong>Shell</strong>, Update to create a new version of existing one.
-				If you'd like to choose MooTools version, use <a onclick='Layout.sidebar.accordion.display(Layout.sidebar.accordion.togglers.indexOf($("settings_toggler")))' href="#">Settings</a>
-				panel above.
-			</p>
-			{% endcomment %}
+				<label>DTD
+				<select name='doctype'>{% for doctype in doctypes %}
+					<option {% if shell %}{% if doctype.current %}selected {% endif %}{% else %}{% if doctype.selected %}selected {% endif %}{% endif %}id="dtd_{{ doctype.name }}" value="{{ doctype.id }}">{{ doctype.name }}</option>
+			{% endfor %}</select></label></p>
 		</div>	
 	</div>	
 </div>
 
-<h3 class='toggler'>Backend support</h3>
+<h3 class='toggler'>Backend for Ajax</h3>
 <div class='element'>
 	<div class="elementBody">
 		<div class="ebCont">
@@ -42,7 +38,7 @@
 				<code>{% url ajax_json_echo %}</code> for JSON and 
 				<code>{% url ajax_html_echo %}</code> for HTML. They both wait 2 seconds 
 				before answering to simulate web latency. HTML one may contain the 
-				JavaScript, it will be run if Request.HTML used.
+				JavaScript.
 			</p>
 			<p>
 				To use them just make an Ajax request using above URLs. 

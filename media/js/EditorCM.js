@@ -49,6 +49,9 @@ var MooShellEditor = new Class({
 				//this.fullscreen.retrieve('fx').start(0);
 			}.bind(this)
 		});
+		mooshell.addEvents({
+			'run': this.b64decode.bind(this)
+		});
 		Layout.registerEditor(this);
 	},
 	getEditor: function() {
@@ -63,8 +66,12 @@ var MooShellEditor = new Class({
 	getLabel: function() {
 		return this.getWindow().getElement('.window_label');
 	},
+	b64decode: function() {
+		this.element.set('value', this.before_decode);
+	},
 	updateFromMirror: function() {
-		if (this.editor) this.element.set('value', this.editor.getCode());
+		this.before_decode = this.editor.getCode();
+		if (this.editor) this.element.set('value', Base64.encode(this.before_decode));
 	},
 	clean: function() {
 		this.element.set('value','');

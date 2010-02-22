@@ -1,6 +1,8 @@
 {% load mooshell_extras %}
 {% with shell.external_resources.all|length as resources_length %}
-<h3 class='toggler{% if shell.external_resources.all %} filled{%endif %}' id='resources_toggler'>Resources{% if resources_length %} <em>({{ resources_length }})</em>{% endif %}</h3>
+<h3 class='toggler{% if shell.external_resources.all %} filled{%endif %}' id='resources_toggler'>
+	{% if resources_length %}Manage{% else %}Add{% endif %} Resources{% if resources_length %} <em>({{ resources_length }})</em>{% endif %}
+</h3>
 {% endwith %}
 <div class='element' id='resources_element'>
 	<div class="elementBody">

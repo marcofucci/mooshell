@@ -1,6 +1,7 @@
 import os.path
 import random
 import time
+import base64
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.views import static
@@ -13,7 +14,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
-from models import Pastie, Shell, JSLibraryGroup, JSLibrary, JSLibraryWrap, JSDependency, ExternalResource
+from models import Pastie, Shell, JSLibraryGroup, JSLibrary, JSLibraryWrap, JSDependency, ExternalResource, DocType
 from forms import PastieForm, ShellForm
 from base.views import serve_static as base_serve_static
 from base.utils import log_to_file, separate_log
@@ -35,6 +36,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 
 	title = settings.MOOSHELL_NEW_TITLE
 		
+	doctypes = DocType.objects.all()
 	if slug:
 		if skin:
 			" important as {user}/{slug} is indistingushable from {slug}/{skin} "
@@ -60,6 +62,9 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 				'embedded_url': embedded_url
 				})
 		title = shell.title if shell.title else settings.MOOSHELL_VIEW_TITLE
+		for dtd in doctypes:
+			if dtd.id == shell.doctype.id:
+				dtd.current = True
 	else:
 		example_url = ''
 		#pastieform = PastieForm()
@@ -71,6 +76,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 	if not skin: skin = req.GET.get('skin',settings.MOOSHELL_DEFAULT_SKIN)
 
 	examples = Pastie.objects.all_examples_by_groups()
+
 
 	
 	# TODO: join some js files for less requests
@@ -91,6 +97,7 @@ def pastie_edit(req, slug=None, version=None, revision=None, author=None, skin=N
 		'css_files': [reverse('mooshell_css', args=["%s.css" % skin])],
 		'js_libs': js_libs,
 		'examples': examples,
+		'doctypes': doctypes,
 		'title': title,
 		'example_url': example_url,
 		'web_server': server,
@@ -129,6 +136,11 @@ def pastie_save(req, nosave=False, skin=None):
 			
 			" Instantiate shell data from the form "
 			shell = shellform.save(commit=False)
+			
+			" Base64 decode "
+			shell.code_js = base64.b64decode(shell.code_js)
+			shell.code_html = base64.b64decode(shell.code_html)
+			shell.code_css = base64.b64decode(shell.code_css)
 
 			" Connect shell with pastie "
 			shell.pastie = pastie
@@ -161,10 +173,6 @@ def pastie_save(req, nosave=False, skin=None):
 			if req.user.is_authenticated():
 				shell.author = req.user
 
-			# version is set automatically
-			#if slug:
-			#	shell.set_next_version()
-				
 			shell.save()
 
 			# add saved dependencies			
@@ -177,7 +185,6 @@ def pastie_save(req, nosave=False, skin=None):
 
 			" return json with pastie url "
 			return HttpResponse(simplejson.dumps({
-					#'pastie_url': ''.join(['http://',req.META['SERVER_NAME'], shell.get_absolute_url()]),
 					'pastie_url_relative': shell.get_absolute_url()
 					}),mimetype='application/javascript'
 				)

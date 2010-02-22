@@ -140,6 +140,22 @@ WRAPCHOICE = (
     ('l', 'onLoad'),
 )
 
+class DocType(models.Model):
+	"""
+	DocString to choose from
+	"""
+	name = models.CharField(max_length=255, unique=True)
+	code = models.TextField(blank=True, null=True)
+	type = models.CharField(max_length=100, default='html', blank=True)
+	selected = models.BooleanField(default=False, blank=True)
+	
+	def __unicode__(self):
+		return self.code
+
+	class Admin:
+		pass
+	
+
 
 class Pastie(models.Model):
 	"""
@@ -222,6 +238,7 @@ class Shell(models.Model):
 	js_wrap = models.CharField(max_length=1, choices=WRAPCHOICE, default='d', null=True, blank=True)
 	external_resources = models.ManyToManyField(ExternalResource, null=True, blank=True)
 	body_tag = models.CharField(max_length=255, null=True, blank=True, default="<body>")
+	doctype = models.ForeignKey(DocType, blank=True, null=True)
 
 	objects = ShellManager()	
 
