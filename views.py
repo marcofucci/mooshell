@@ -205,11 +205,7 @@ def pastie_display(req, slug, shell=None, dependencies=[], resources=[], skin=No
 	" render the shell only "
 	if not shell:
 		pastie = get_object_or_404(Pastie, slug=slug)
-		if version == None:
-			shell = pastie.favourite
-		else:
-			user = get_object_or_404(User,username=author) if author else None
-			shell = get_object_or_404(Shell, pastie__slug=slug, version=version, author=user)
+		shell = pastie.favourite
 		" prepare dependencies if needed "
 		dependencies = shell.js_dependency.all()
 		resources = shell.external_resources.all()
@@ -286,12 +282,10 @@ def embedded(req, slug, version=None, revision=0, author=None, tabs=None, skin=N
 # consider better caching for that function.
 def pastie_show(req, slug, version=None, author=None, skin=None):
 	" render the shell only "
-	pastie = get_object_or_404(Pastie,slug=slug)
-	if pastie.favourite and version == None:
+	pastie = get_object_or_404(Pastie, slug=slug)
+	if version == None:
 		shell = pastie.favourite
 	else:
-		if version == None: 
-			version=0
 		user = get_object_or_404(User,username=author) if author else None
 		shell = get_object_or_404(Shell, pastie__slug=slug, version=version, author=user)
 	if not skin: skin = req.GET.get('skin', settings.MOOSHELL_DEFAULT_SKIN)
