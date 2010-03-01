@@ -204,7 +204,12 @@ def pastie_save(req, nosave=False, skin=None):
 def pastie_display(req, slug, shell=None, dependencies=[], resources=[], skin=None):
 	" render the shell only "
 	if not shell:
-		shell = get_object_or_404(Shell,pastie__slug=slug,version=version)
+		pastie = get_object_or_404(Pastie, slug=slug)
+		if version == None:
+			shell = pastie.favourite
+		else:
+			user = get_object_or_404(User,username=author) if author else None
+			shell = get_object_or_404(Shell, pastie__slug=slug, version=version, author=user)
 		" prepare dependencies if needed "
 		dependencies = shell.js_dependency.all()
 		resources = shell.external_resources.all()
