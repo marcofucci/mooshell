@@ -2,8 +2,6 @@
  Layout using CodeMirror
  */
 
-//if (!console) console = { log: $empty, info: $empty, dir: $empty };
-
 Element.implement({
 	getInnerWidth: function() {
 		return this.getSize().x -
