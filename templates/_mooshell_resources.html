@@ -4,6 +4,7 @@
 	{% if resources_length %}Manage{% else %}Add{% endif %} Resources{% if resources_length %} <em>({{ resources_length }})</em>{% endif %}
 </h3>
 {% endwith %}
+
 <div class='element' id='resources_element'>
 	<div class="elementBody">
 		<div class="ebCont">
@@ -11,8 +12,8 @@
 				<input id="external_resource" type="text" value="" />
 				<a id="add_external_resource" class="submit" href="#" title="Add resource"><span>Add</span></a>
 			</div>
-		
 			<input type='hidden' value='' id='external_resources_id' name='add_external_resources' />
+			
 			<ul id='external_resources_list'>
 			<script type='text/javascript'>var resources = [];</script>
 			{% for res in shell.external_resources.all %}
