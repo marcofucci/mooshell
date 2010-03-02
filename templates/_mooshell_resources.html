@@ -4,13 +4,16 @@
 	{% if resources_length %}Manage{% else %}Add{% endif %} Resources{% if resources_length %} <em>({{ resources_length }})</em>{% endif %}
 </h3>
 {% endwith %}
+
 <div class='element' id='resources_element'>
 	<div class="elementBody">
 		<div class="ebCont">
-			<input type='text' id='external_resource' value='' />
-			<button id='add_external_resource'>+</button>
-		
+			<div id="external-resources-form">
+				<input id="external_resource" type="text" value="" />
+				<a id="add_external_resource" class="submit" href="#" title="Add resource"><span>Add</span></a>
+			</div>
 			<input type='hidden' value='' id='external_resources_id' name='add_external_resources' />
+			
 			<ul id='external_resources_list'>
 			<script type='text/javascript'>var resources = [];</script>
 			{% for res in shell.external_resources.all %}
@@ -26,7 +29,7 @@
 
 <script type='text/javascript'>
 	var default_text = 'JavaScript/CSS URL',
-		add_external_resource_url = "{% url add_external_resource %}"
+		add_external_resource_url = "{% url add_external_resource %}";
 	var update_resource_input = function(value) {
 		if (value) {
 			if (resources.contains(value)) {
@@ -36,18 +39,25 @@
 		}
 		$('external_resources_id').set('value', resources.join(','));
 		return true;
-	}
+	};
 	var remove_resource = function(value) {
 		if (resources.contains(value)) {
-			resources.erase(value)
+			resources.erase(value);
 		}
 		update_resource_input();
-		$('external_resource_'+value).destroy();
-	}
+		
+		this.external_resource_el = $('external_resource_'+value);
+		new Fx.Reveal(this.external_resource_el, {
+			onComplete: function(){
+				this.destroy();
+			}.bind(this.external_resource_el)
+		}).dissolve();
+		
+	};
 	var submit_external_resource = function(e) {
 		e.stop();
 		// save url, after success update current list of resources and clean up the input
-		var url = $('external_resource').value
+		var url = $('external_resource').value;
 		if (url && url != $('external_resource').retrieve('default_value') && $('external_resource').value.length > 7) {
 			new Request.JSON({
 				url: add_external_resource_url,
@@ -77,7 +87,7 @@
 									remove_resource(this.get('rel').toInt());
 								}
 							}
-						}).inject(li)
+						}).inject(li);
 					} else {
 						// this resource was already included in the list
 					}
