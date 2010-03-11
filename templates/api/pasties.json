@@ -1,1 +1,4 @@
-{% if func %}jsFiddle_API = function() { return {% endif %}[{% for pastie in pasties %}{% include "api/pastie.json" %}{% if not forloop.last %},{% endif %}{% endfor %}]{% if func %}; }{% endif %}
+{% if func %}jsFiddleAPI({
+	"status": "ok",
+	"list": {% endif %}[{% for pastie in pasties %}{% include "api/pastie.json" %}{% if not forloop.last %},{% endif %}{% endfor %}]{% if func %}
+});{% endif %}
