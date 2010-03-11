@@ -1,4 +1,4 @@
-{% if func %}jsFiddleAPI({
+{% if func %}{{ project_name }}API({
 	"status": "ok",
 	"list": {% endif %}[{% for pastie in pasties %}{% include "api/pastie.json" %}{% if not forloop.last %},{% endif %}{% endfor %}]{% if func %}
 });{% endif %}
