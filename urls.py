@@ -56,6 +56,8 @@ urlpatterns = patterns('mooshell.views',
 
 	# API
 	url(r'^api/user_shells/(?P<author>\w+)/$','api_get_users_pasties'),
+	url(r'^api/user/(?P<author>\w+)/demo/list.json$', 'api_get_users_pasties', {'func': False}),
+	url(r'^api/user/(?P<author>\w+)/demo/list.jsonp$', 'api_get_users_pasties', {'func': True}),
 
 
     # show

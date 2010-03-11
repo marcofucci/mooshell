@@ -397,8 +397,9 @@ def make_favourite(req):
 	raise Http404 
 
 
-def api_get_users_pasties(req, author, limit=50):
+def api_get_users_pasties(req, author, func=False):
 	separate_log()
+	limit = req.GET.get('limit',50)
 	user = get_object_or_404(User, username=author)
 	pasties = Pastie.objects\
 					.filter(author__username=author)\
@@ -413,7 +414,7 @@ def api_get_users_pasties(req, author, limit=50):
 		server = 'http://%s' % req.META['SERVER_NAME']
 
 	return render_to_response('api/pasties.json', 
-								{'pasties': pasties, 'server': server},
+								{'pasties': pasties, 'server': server, 'func': func},
 								mimetype="application/javascript"
 							)
 
