@@ -420,6 +420,7 @@ def api_get_users_pasties(req, author, method='json'):
 
 	return render_to_response('api/pasties.%s' % type, 
 								{'pasties': pasties, 'server': server, 'func': func},
+								context_instance=RequestContext(req),
 								mimetype="application/javascript"
 							)
 
