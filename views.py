@@ -400,7 +400,7 @@ def make_favourite(req):
 def api_get_users_pasties(req, author, method='json'):
 	separate_log()
 	limit = req.GET.get('limit',50)
-	callback = req.GET.get('callback',None)
+	callback = req.GET.get('jsoncallback',None)
 	user = get_object_or_404(User, username=author)
 	pasties = Pastie.objects\
 					.filter(author__username=author)\
