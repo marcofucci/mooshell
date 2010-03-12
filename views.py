@@ -357,6 +357,8 @@ def ajax_html_javascript_response(req):
 
 
 def serve_static(request, path, media='media', type=None):
+	if path == 'favicon':
+		path = 'favicon.ico'
 	return base_serve_static(request, path, media, type)
 
 def get_library_versions(request, group_id): 
@@ -400,7 +402,9 @@ def make_favourite(req):
 def api_get_users_pasties(req, author, method='json'):
 	separate_log()
 	limit = req.GET.get('limit',50)
-	callback = req.GET.get('jsoncallback',None)
+	callback = req.GET.get('jsoncallback', None)
+	if not callback:
+		callback = req.GET.get('callback', None)
 	user = get_object_or_404(User, username=author)
 	pasties = Pastie.objects\
 					.filter(author__username=author)\
