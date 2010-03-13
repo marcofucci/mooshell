@@ -1,9 +1,0 @@
-{% with pastie.favourite as shell %}{ 
-	"title": "{{ shell.title|escapejs }}",
-	"author": "{{ shell.author.username|escapejs }}",
-	"description": "{{ shell.description|escapejs }}",
-	"url": "{{ server }}{{ shell.get_absolute_url|escapejs }}",
-	"version": {{ shell.version }},
-	"created": "{{ shell.created_at|date:"Y-m-d H:i:s" }}",
-	"framework": "{{ shell.js_lib.library_group.name|escapejs }}"
-}{% endwith %}

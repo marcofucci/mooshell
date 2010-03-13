@@ -1,4 +1,6 @@
+{% load mooshell_utils %}
+
 {% if callback %}{{ callback }}({
 	"status": "ok",
-	"list": {% endif %}[{% for pastie in pasties %}{% include "api/pastie.json" %}{% if not forloop.last %},{% endif %}{% endfor %}]{% if callback %}
+	"list": {% endif %}{{ pasties|jsonify_pasties:server }}{% if callback %}
 });{% endif %}
